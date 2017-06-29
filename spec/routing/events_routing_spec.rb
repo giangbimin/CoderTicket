@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Event Routes', type: :routing do
-  it 'routes /events to events#index' do
-    expect(get: '/events').to route_to(
+  it 'routes /upcoming to events#index' do
+    expect(get: '/upcoming').to route_to(
       controller: 'events',
       action: 'index'
     )

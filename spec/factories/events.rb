@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :event do
-    name { Faker::Name.name }
+    sequence(:name) { |n| "user#{n}@adsadsad.com" }
     extended_html_description { Faker::Name.name }
     category
     venue
