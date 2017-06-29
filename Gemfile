@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.0.1'
 
 # Use pg as the database for Active Record
-gem 'pg', '~> 0.18'
+# gem 'pg', '~> 0.18'
+gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7', '>= 3.7.1'
 # Use SCSS for stylesheets
@@ -28,9 +29,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-tether', '>= 1.1.0'
-end
+# source 'https://rails-assets.org' do
+  # gem 'rails-assets-tether', '>= 1.1.0'
+# end
 
 gem 'bootstrap', '~> 4.0.0.alpha5'
 gem 'simple_form'
@@ -42,10 +43,13 @@ gem 'font-kit-rails', '~> 1.2.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+group :test do
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'tzinfo-data'
   gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
   gem 'simplecov', '~> 0.12.0', require: false
   gem 'guard-rspec', require: false

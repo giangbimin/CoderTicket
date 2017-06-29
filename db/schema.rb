@@ -12,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20151215104433) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -31,8 +28,8 @@ ActiveRecord::Schema.define(version: 20151215104433) do
     t.string   "name"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.index ["category_id"], name: "index_events_on_category_id", using: :btree
-    t.index ["venue_id"], name: "index_events_on_venue_id", using: :btree
+    t.index ["category_id"], name: "index_events_on_category_id"
+    t.index ["venue_id"], name: "index_events_on_venue_id"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -48,7 +45,7 @@ ActiveRecord::Schema.define(version: 20151215104433) do
     t.integer  "max_quantity"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["event_id"], name: "index_ticket_types_on_event_id", using: :btree
+    t.index ["event_id"], name: "index_ticket_types_on_event_id"
   end
 
   create_table "venues", force: :cascade do |t|
@@ -57,11 +54,7 @@ ActiveRecord::Schema.define(version: 20151215104433) do
     t.integer  "region_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["region_id"], name: "index_venues_on_region_id", using: :btree
+    t.index ["region_id"], name: "index_venues_on_region_id"
   end
 
-  add_foreign_key "events", "categories"
-  add_foreign_key "events", "venues"
-  add_foreign_key "ticket_types", "events"
-  add_foreign_key "venues", "regions"
 end
