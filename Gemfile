@@ -30,7 +30,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 # source 'https://rails-assets.org' do
-  # gem 'rails-assets-tether', '>= 1.1.0'
+  gem 'rails-assets-tether', '>= 1.1.0'
 # end
 
 gem 'bootstrap', '~> 4.0.0.alpha5'
@@ -45,6 +45,9 @@ gem 'font-kit-rails', '~> 1.2.0'
 # gem 'capistrano-rails', group: :development
 group :test do
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'rails-controller-testing'
+  gem 'factory_girl_rails', :require => false
+  gem 'faker'
 end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
