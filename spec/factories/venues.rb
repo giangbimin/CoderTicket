@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :venue do
-    name { Faker::Name.name }
+    name { "name#{Venue.all.count}" }
     region
   end
 end

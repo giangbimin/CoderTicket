@@ -8,6 +8,13 @@ describe 'Event Routes', type: :routing do
     )
   end
 
+  it 'routes /upcoming to events#index' do
+    expect(get: '/upcoming').to route_to(
+      controller: 'events',
+      action: 'index'
+    )
+  end
+
   it 'routes /events/1 to events#show' do
     expect(get: '/events/1').to route_to(
       controller: 'events',

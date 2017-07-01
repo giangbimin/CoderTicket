@@ -7,10 +7,26 @@ RSpec.describe EventsController, type: :controller do
       expect(assigns(:events)).to eq([])
     end
 
-    it 'should assigns @events' do
-      event = FactoryGirl.create(:event)
+    it 'should show upcoming events' do
+      event1 = FactoryGirl.create(:event)
+      event1.update_attributes(starts_at: Time.current + 1.day)
+      event2 = FactoryGirl.create(:event)
+      event2.update_attributes(starts_at: Time.current - 1.day)
+
       get :index
-      expect(assigns(:events)).to eq([event])
+      expect(assigns(:events)).to eq [event1]
+    end
+
+    it 'should show search with name' do
+      event1 = FactoryGirl.create(:event)
+      event1.update_attributes(starts_at: Time.current + 1.day)
+      event2 = FactoryGirl.create(:event)
+      event2.update_attributes(starts_at: Time.current + 1.day)
+      event3 = FactoryGirl.create(:event)
+      event3.update_attributes(starts_at: Time.current + 1.day)
+
+      get :index, params: { search: event1.name }
+      expect(assigns(:events)).to eq [event1]
     end
   end
 
