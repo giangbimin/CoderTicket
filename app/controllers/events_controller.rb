@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :authorize, only: [:new, :create]
+  before_action :set_event, only: [:show]
 
   def index
     @events = if params[:search].present?
@@ -9,16 +10,22 @@ class EventsController < ApplicationController
               end
   end
 
-  def show
-    @event = Event.find(params[:id])
-  end
+  def show; end
 
   def new
-    @event = Event.new
+    @event = current_user.events.build
   end
 
   def create
-    @event = Event.new
+    @event = current_user.events.build(event_params)
+
+    respond_to do |format|
+      if @event.save
+        format.html { redirect_to @event, notice: 'Article was successfully created.' }
+      else
+        format.html { render :new }
+      end
+    end
   end
 
   private
