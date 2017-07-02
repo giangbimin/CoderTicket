@@ -5,8 +5,10 @@ class EventsController < ApplicationController
   def index
     @events = if params[:search].present?
                 Event.search(params[:search])
-              else
+              elsif session[:user_id].present?
                 Event.upcoming
+              else
+                Event.published
               end
   end
 

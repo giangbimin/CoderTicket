@@ -20,23 +20,28 @@ RSpec.describe EventsController, type: :controller do
       expect(assigns(:events)).to eq([])
     end
 
-    it 'should show upcoming events' do
+    it 'should show upcoming events if user login' do
       event1 = FactoryGirl.create(:event)
       event1.update_attributes(starts_at: Time.current + 1.day)
-      event2 = FactoryGirl.create(:event)
-      event2.update_attributes(starts_at: Time.current - 1.day)
+      event1.update_attributes(ends_at: Time.current + 10.day)
 
-      get :index
+      get :index, session: login_session
       expect(assigns(:events)).to eq [event1]
     end
 
+    # it 'should show published events if user not login' do
+    #   event1 = FactoryGirl.create(:event)
+    #   event1.update_attributes(starts_at: Time.current + 1.day)
+    #   event1.update_attributes(ends_at: Time.current + 10.day)
+    #   event1.update_attributes(published_at: Time.current)
+
+    #   get :index, session: valid_session
+    #   expect(assigns(:events)).to eq [event1]
+    # end
+
     it 'should show search with name' do
       event1 = FactoryGirl.create(:event)
-      event1.update_attributes(starts_at: Time.current + 1.day)
-      event2 = FactoryGirl.create(:event)
-      event2.update_attributes(starts_at: Time.current + 1.day)
-      event3 = FactoryGirl.create(:event)
-      event3.update_attributes(starts_at: Time.current + 1.day)
+      event1.update_attributes(ends_at: Time.current + 10.days)
 
       get :index, params: { search: event1.name }
       expect(assigns(:events)).to eq [event1]

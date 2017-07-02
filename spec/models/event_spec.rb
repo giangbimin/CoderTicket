@@ -20,18 +20,15 @@ RSpec.describe Event, type: :model do
     context '.upcoming ' do
       it 'return [] if no have upcoming events ' do
         event1 = FactoryGirl.create(:event)
-        event1.update_attributes(starts_at: Time.current + 1.day)
-        event2 = FactoryGirl.create(:event)
-        event2.update_attributes(starts_at: Time.current - 1.day)
-        event1.update_attributes(starts_at: Time.current - 1.day)
+        event1.update_attributes(starts_at: Time.current - 10.days)
+        event1.update_attributes(ends_at: Time.current - 1.day)
         expect(Event.upcoming).to eq([])
       end
 
       it 'return upcoming events ' do
         event1 = FactoryGirl.create(:event)
         event1.update_attributes(starts_at: Time.current + 1.day)
-        event2 = FactoryGirl.create(:event)
-        event2.update_attributes(starts_at: Time.current - 1.day)
+        event1.update_attributes(ends_at: Time.current + 10.days)
         expect(Event.upcoming).to eq([event1])
       end
     end
@@ -39,19 +36,29 @@ RSpec.describe Event, type: :model do
     context '.search ' do
       it 'return [] if no have upcoming events ' do
         event1 = FactoryGirl.create(:event)
-        event1.update_attributes(starts_at: Time.current + 1.day)
-        event2 = FactoryGirl.create(:event)
-        event2.update_attributes(starts_at: Time.current - 1.day)
-        event1.update_attributes(starts_at: Time.current - 1.day)
+        event1.update_attributes(starts_at: Time.current - 10.days)
+        event1.update_attributes(ends_at: Time.current - 1.day)
         expect(Event.search(event1.name)).to eq([])
       end
 
-      it 'return upcoming events whith name' do
+      it 'return upcoming events with name' do
         event1 = FactoryGirl.create(:event)
         event1.update_attributes(starts_at: Time.current + 1.day)
-        event2 = FactoryGirl.create(:event)
-        event2.update_attributes(starts_at: Time.current - 1.day)
+        event1.update_attributes(ends_at: Time.current + 10.days)
         expect(Event.search(event1.name)).to eq([event1])
+      end
+    end
+
+    context '.published ' do
+      it 'return [] if no have upcoming events ' do
+        expect(Event.published).to eq([])
+      end
+
+      it 'return published events with name' do
+        event1 = FactoryGirl.create(:event)
+        event1.update_attributes(ends_at: Time.current + 10.days)
+        event1.update_attributes(published_at: Time.current + 1.day)
+        expect(Event.published).to eq([event1])
       end
     end
   end

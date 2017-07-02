@@ -7,6 +7,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :extended_html_description, :venue, :category, :starts_at
   validates_uniqueness_of :name, uniqueness: { scope: [:venue, :starts_at] }
 
-  scope :upcoming, -> { where('starts_at > ?', Time.zone.now) }
+  scope :published, -> { where.not(published_at: nil) }
+  scope :upcoming, -> { where('ends_at > ?', Time.current) }
   scope :search, -> (name) { upcoming.where('name like ?', name) }
 end
